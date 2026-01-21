@@ -2,13 +2,39 @@
 <html>
 <head>
   <title>Desi AI Chat</title>
+  <style>
+    body { background:#0e2a2a; color:white; font-family:Arial; }
+    #chat { max-width:600px; margin:40px auto; }
+    input, button { padding:10px; font-size:16px; }
+    button { background:#ff9800; border:none; cursor:pointer; }
+    #messages { margin-bottom:20px; }
+  </style>
 </head>
-<body style="font-family:sans-serif; background:#0f2a2e; color:white; text-align:center; padding-top:60px">
+<body>
 
-  <h1>🤖 Desi AI Chat</h1>
-  <p>Chat feature coming soon 🚀</p>
+<div id="chat">
+  <h2>🤖 Desi AI</h2>
+  <div id="messages"></div>
 
-  <a href="index.html" style="color:orange;">⬅ Back to Home</a>
+  <input id="msg" placeholder="Type message..." />
+  <button onclick="send()">Send</button>
+</div>
+
+<script>
+async function send() {
+  const msg = document.getElementById("msg").value;
+  document.getElementById("messages").innerHTML += "<p><b>You:</b> "+msg+"</p>";
+
+  const res = await fetch("RENDER_LINK_YAHAN_DALEGA", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ message: msg })
+  });
+
+  const data = await res.json();
+  document.getElementById("messages").innerHTML += "<p><b>AI:</b> "+data.reply+"</p>";
+}
+</script>
 
 </body>
 </html>
